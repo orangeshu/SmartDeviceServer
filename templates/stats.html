@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理平台-报表数据</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'css_includs.html' %}
+</head>
+<body>
+{% include 'header.html' %}
+
+<div class="page-content">
+<div class="row">
+<div class="col-md-2">
+    <div class="sidebar content-box" style="display: block;">
+        <ul class="nav">
+            <!-- Main menu -->
+            <li><a href="{% url 'console:index' %}"><i class="glyphicon glyphicon-home"></i>主控制台</a>
+            </li>
+            <li><a href="{% url 'console:rfid' %}"><i class="glyphicon glyphicon-flash"></i>RFID数据</a></li>
+            <li><a href="{% url 'console:location' %}"><i class="glyphicon glyphicon-map-marker"></i>卫星定位</a>
+            </li>
+            <li><a href="{% url 'console:video' %}"><i class="glyphicon glyphicon-facetime-video"></i>视频监控</a>
+            </li>
+            <li class="current"><a href="{% url 'console:stats' %}"><i class="glyphicon glyphicon-stats"></i>报表数据</a>
+            </li>
+        </ul>
+    </div>
+    <div class="panel-danger">
+        <div class="content-box-header panel-heading">
+            <div class="panel-title">告警数据</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+            </div>
+        </div>
+        <div class="content-box-large box-with-header">
+            <table id="device_info" cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+                <tbody>
+                <tr class="danger">
+                    <td title="点击后右侧设备数据列表出现该设备详细数据">设备C 温度传感器 超出阈值,请检查!</td>
+                    <td title="清除该告警"><i class="glyphicon glyphicon-trash"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-10">
+    <div class="row">
+        <div class="col-md-3 panel-info">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title">设备列表</div>
+
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header">
+                <table id="device_list" border="0" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>设备备注</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="success">
+                        <td>设备A</td>
+                        <td>备注A-方便记忆查找使用</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备B</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="danger">
+                        <td>设备C</td>
+                        <td>cd6eriuweu2</td>
+                        <td>
+                            <button class="btn btn-danger btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备D</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备K</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备E</td>
+                        <td>cd6eriuweu2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备F</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备G</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备H</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备I</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备J</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备G</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备H</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备I</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>设备J</td>
+                        <td>b5dfsyotpk2</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="col-md-9 panel-info">
+            <div class="col-md-6">
+                <div class="content-box-large">
+                    <div class="panel-heading">
+                        <div class="panel-title">报表展现1</div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="piechart1" style="width:100%;height:200px"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="content-box-large">
+                    <div class="panel-heading">
+                        <div class="panel-title">报表展现2</div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="piechart2" style="width:100%;height:200px"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="content-box-large">
+                    <div class="panel-heading">
+                        <div class="panel-title">报表展现3</div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="catchart" style="width:100%;height:300px"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="content-box-large">
+                    <div class="panel-heading">
+                        <div class="panel-title">报表展现4</div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="timechart" style="width:100%;height:300px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<footer>
+    {% include 'footer.html' %}
+</footer>
+
+{% include 'js_includs.html' %}
+</body>
+</html>

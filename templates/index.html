@@ -1,0 +1,251 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理平台-主控制台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'css_includs.html' %}
+    {% include 'js_includs.html' %}
+
+    <script type='text/javascript'>
+        var deviceListTable;
+        $(function () {
+            showDeviceList();
+
+        });
+
+        function showDeviceList() {
+            $.ajax({
+                url: '{% url "console:ajax_device_list" %}',
+                type: 'GET',
+                dataType: "json",
+                error: function (xhr) {
+                    alert('Ajax request出错,请重试.');
+                },
+                success: function (response) {
+                    arrangeListTableData(response);
+                }
+            });
+        }
+
+        function showDeviceDetail(device_id) {
+            $.ajax({
+                url: '{% url "console:ajax_device_info" 0 %}'.replace(0, device_id),
+                type: 'GET',
+                dataType: "json",
+                error: function (xhr) {
+                    alert('Ajax request出错,请重试.');
+                },
+                success: function (response) {
+                    arrangeInfoTableData(response);
+                }
+            });
+        }
+
+        function setStatusButton(rtnJsonRow) {
+            var button = null;
+            if (rtnJsonRow % 5 == 0) {
+                button = "<a class=\"btn btn-danger btn-xs\" title=\"点击后右侧设备数据列表出现该设备详细数据\" href=\"javascript:showDeviceDetail(0);\">异常</a>".replace(0, rtnJsonRow);
+            } else {
+                button = "<a class=\"btn btn-success btn-xs\" title=\"点击后右侧设备数据列表出现该设备详细数据\" href=\"javascript:showDeviceDetail(0);\">正常</a>".replace(0, rtnJsonRow);
+            }
+            return button;
+        }
+
+        function arrangeListTableData(rtnJson) {
+            if (deviceListTable) {
+                deviceListTable.fnClearTable();
+            } else {
+                deviceListTable = $('#device_list').dataTable({
+                    "oLanguage": lang,
+                    "aoColumn": [
+                        {"sType": "chinese-string"}, //设备名称
+                        {"sType": "string"},         //设备标识
+                        {"sType": "chinese-string"}, //设备备注
+                        {"sType": "string"},         //软件版本
+                        {"sType": "string"}          //设备状态
+                    ],
+                    "bLengthChange": false, //输入页数开关
+                    "bPaginate": true, //分页开关
+                    "bInfo": true,  //最下方info开关
+                    "sDom": 'rtpi',
+                    "asStripeClasses": [],
+                    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        var sTrClass;
+                        if (aData[4] % 5 == 0)
+                            sTrClass = "danger";
+                        else
+                            sTrClass = "success";
+                        $(nRow).addClass(sTrClass);
+                        return nRow;
+                    }
+                });
+            }
+
+            for (var i = 0; i < 50; ++i) {
+                var statusButton = setStatusButton(i);
+                deviceListTable.fnAddData([
+                    i + 1,
+                    i + 2,
+                    i + 3,
+                    i + 4,
+                    statusButton
+                ], false);
+            }
+            deviceListTable.fnDraw();
+            {#            deviceListTable.fnSort([[1, 'desc']]);#}
+        }
+
+        function arrangeInfoTableData(rtnJson) {
+            console.log('info table')
+        }
+
+    </script>
+
+</head>
+<body>
+{% include 'header.html' %}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li class="current"><a href="{% url 'console:index' %}"><i class="glyphicon glyphicon-home"></i>主控制台</a>
+                    </li>
+                    <li><a href="{% url 'console:rfid' %}"><i class="glyphicon glyphicon-flash"></i>RFID数据</a></li>
+                    <li><a href="{% url 'console:location' %}"><i class="glyphicon glyphicon-map-marker"></i>卫星定位</a>
+                    </li>
+                    <li><a href="{% url 'console:video' %}"><i class="glyphicon glyphicon-facetime-video"></i>视频监控</a>
+                    </li>
+                    <li><a href="{% url 'console:stats' %}"><i class="glyphicon glyphicon-stats"></i>报表数据</a></li>
+                </ul>
+            </div>
+            <div class="panel-danger">
+                <div class="content-box-header panel-heading">
+                    <div class="panel-title">告警数据</div>
+
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                        <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                    </div>
+                </div>
+                <div class="content-box-large box-with-header">
+                    <table id="device_info" cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+                        <tbody>
+                        <tr class="danger">
+                            <td title="点击后右侧设备数据列表出现该设备详细数据">设备C 温度传感器 超出阈值,请检查!</td>
+                            <td title="清除该告警"><i class="glyphicon glyphicon-trash"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-6 panel-info">
+                        <div class="content-box-header panel-heading">
+                            <div class="panel-title">设备列表</div>
+
+                            <div class="panel-options">
+                                <a href="javascript:showDeviceList();"><i class="glyphicon glyphicon-refresh"></i></a>
+                                {#                                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>#}
+                            </div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <table id="device_list" cellpadding="0" cellspacing="0" border="0"
+                                   class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>设备名称</th>
+                                    <th>设备标识</th>
+                                    <th>设备备注</th>
+                                    <th>软件版本</th>
+                                    <th width="10%">设备状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 panel-info">
+                        <div class="content-box-header panel-heading">
+                            <div class="panel-title">设备数据</div>
+
+                            <div class="panel-options">
+                                <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                            </div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <table id="device_" border="0" class="table table-bordered table-hover">
+                                <thead>
+                                <tr class="warning">
+                                    <th>传感器</th>
+                                    <th>是否正常</th>
+                                    <th>当前数值</th>
+                                    <th>上次告警时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <table id="device_config" border="0" class="table table-bordered table-hover">
+                                <thead>
+                                <tr class="warning">
+                                    <th>传感器</th>
+                                    <th>阈值(最小值)</th>
+                                    <th>阈值(最大值)</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>温度传感器</td>
+                                    <td>1</td>
+                                    <td>60</td>
+                                    <td width="10%">
+                                        <button class="btn btn-info btn-xs">修改</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>湿度传感器</td>
+                                    <td>1</td>
+                                    <td>60</td>
+                                    <td width="10%">
+                                        <button class="btn btn-info btn-xs">修改</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>震动传感器</td>
+                                    <td>1</td>
+                                    <td>60</td>
+                                    <td width="10%">
+                                        <button class="btn btn-success btn-xs">保存</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    {% include 'footer.html' %}
+</footer>
+
+</body>
+</html>

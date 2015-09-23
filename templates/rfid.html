@@ -1,0 +1,250 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理平台-RFID数据</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'css_includs.html' %}
+</head>
+<body>
+{% include 'header.html' %}
+
+
+<div class="page-content">
+<div class="row">
+<div class="col-md-2">
+    <div class="sidebar content-box" style="display: block;">
+        <ul class="nav">
+            <!-- Main menu -->
+            <li><a href="{% url 'console:index' %}"><i class="glyphicon glyphicon-home"></i>主控制台</a>
+            </li>
+            <li class="current"><a href="{% url 'console:rfid' %}"><i class="glyphicon glyphicon-flash"></i>RFID数据</a></li>
+            <li><a href="{% url 'console:location' %}"><i class="glyphicon glyphicon-map-marker"></i>卫星定位</a></li>
+            <li><a href="{% url 'console:video' %}"><i class="glyphicon glyphicon-facetime-video"></i>视频监控</a></li>
+            <li><a href="{% url 'console:stats' %}"><i class="glyphicon glyphicon-stats"></i>报表数据</a></li>
+        </ul>
+    </div>
+    <div class="panel-danger">
+        <div class="content-box-header panel-heading">
+            <div class="panel-title">告警数据</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+            </div>
+        </div>
+        <div class="content-box-large box-with-header">
+            <table id="device_info" border="0" class="table table-hover">
+                <tbody>
+                <tr class="danger">
+                    <td title="点击后右侧RFID数据列表出现该设备详细数据">设备C 温度传感器 超出阈值,请检查!</td>
+                    <td title="清除该告警"><i class="glyphicon glyphicon-trash"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-10">
+<div class="row">
+<div class="row">
+<div class="col-md-6 panel-info">
+    <div class="content-box-header panel-heading">
+        <div class="panel-title">设备列表</div>
+
+        <div class="panel-options">
+            <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+        </div>
+    </div>
+    <div class="content-box-large box-with-header">
+        <table id="device_list" border="0"
+               class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>设备名称</th>
+                <th>设备标识</th>
+                <th>设备位置</th>
+                <th>软件版本</th>
+                <th width="10%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="success">
+                <td>设备A</td>
+                <td>a4dfs1xcvz1</td>
+                <td>翠华路</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备B</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="danger">
+                <td>设备C</td>
+                <td>cd6eriuweu2</td>
+                <td>钟楼</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">异常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备D</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备K</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备E</td>
+                <td>cd6eriuweu2</td>
+                <td>钟楼</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备F</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备G</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备H</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备I</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>设备J</td>
+                <td>b5dfsyotpk2</td>
+                <td>小寨</td>
+                <td>1.1</td>
+                <td>
+                    <button class="btn btn-success btn-xs" title="点击后右侧RFID数据列表出现该设备详细数据">正常</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="col-md-6 panel-info">
+    <div class="content-box-header panel-heading">
+        <div class="panel-title">RFID数据</div>
+
+        <div class="panel-options">
+            <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+        </div>
+    </div>
+    <div class="content-box-large box-with-header">
+        <table id="device_info" border="0" class="table table-bordered table-hover">
+            <thead>
+            <tr class="success">
+                <th colspan="4">设备A RFID数据</th>
+            </tr>
+            <tr class="warning">
+                <th>序列号</th>
+                <th>扫描次数</th>
+                <th>上次扫描时间</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>温度传感器</td>
+                <td>正常</td>
+                <td>31.5</td>
+                <td>2015-08-21 17:30:08</td>
+            </tr>
+            <tr>
+                <td>湿度传感器</td>
+                <td>正常</td>
+                <td>57.9</td>
+                <td>2015-08-21 17:30:08</td>
+            </tr>
+            <tr>
+                <td>震动传感器</td>
+                <td>正常</td>
+                <td>0.5</td>
+                <td>2015-08-21 17:30:08</td>
+            </tr>
+            <tr>
+                <td>红外传感器</td>
+                <td>正常</td>
+                <td></td>
+                <td>2015-07-21 10:15:33</td>
+            </tr>
+            <tr>
+                <td>气体传感器</td>
+                <td>正常</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+    {% include 'footer.html' %}
+</footer>
+
+{% include 'js_includs.html' %}
+</body>
+</html>

@@ -1,0 +1,252 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理平台-卫星定位</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'css_includs.html' %}
+    <!--引用百度地图API-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=C5c61f3f0b4ddc40a4d76457b86cdc15"></script>
+    <script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      addMapOverlay();//向地图添加覆盖物
+    }
+    function createMap(){
+      map = new BMap.Map("map");
+      map.centerAndZoom(new BMap.Point(109.57359,35.031766),9);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+        target.openInfoWindow(window);
+      });
+    }
+    function addMapOverlay(){
+    }
+    //向地图添加控件
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+      map.addControl(navControl);
+      var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+      map.addControl(overviewControl);
+    }
+    var map = document.getElementById('map');
+    initMap();
+  </script>
+</head>
+<body>
+{% include 'header.html' %}
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li><a href="{% url 'console:index' %}"><i class="glyphicon glyphicon-home"></i>主控制台</a>
+                    </li>
+                    <li><a href="{% url 'console:rfid' %}"><i class="glyphicon glyphicon-flash"></i>RFID数据</a></li>
+                    <li class="current"><a href="{% url 'console:location' %}"><i
+                            class="glyphicon glyphicon-map-marker"></i>卫星定位</a>
+                    </li>
+                    <li><a href="{% url 'console:video' %}"><i class="glyphicon glyphicon-facetime-video"></i>视频监控</a>
+                    </li>
+                    <li><a href="{% url 'console:stats' %}"><i class="glyphicon glyphicon-stats"></i>报表数据</a></li>
+                </ul>
+            </div>
+            <div class="panel-danger">
+                <div class="content-box-header panel-heading">
+                    <div class="panel-title">告警数据</div>
+
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                        <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                    </div>
+                </div>
+                <div class="content-box-large box-with-header">
+                    <table id="device_info" border="0" class="table table-hover">
+                        <tbody>
+                        <tr class="danger">
+                            <td title="点击后直接跳转至主控制台设备数据">设备C 温度传感器 超出阈值,请检查!</td>
+                            <td title="清除该告警"><i class="glyphicon glyphicon-trash"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-3 panel-info">
+                    <div class="content-box-header panel-heading">
+                        <div class="panel-title">设备列表</div>
+
+                        <div class="panel-options">
+                            <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                            <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                        </div>
+                    </div>
+                    <div class="content-box-large box-with-header">
+                        <table id="device_list" border="0" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>设备名称</th>
+                                <th>设备备注</th>
+                                <th width="10%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="success">
+                                <td>设备A</td>
+                                <td>备注A-方便记忆查找使用</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备B</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="danger">
+                                <td>设备C</td>
+                                <td>cd6eriuweu2</td>
+                                <td>
+                                    <button class="btn btn-danger btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备D</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备K</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备E</td>
+                                <td>cd6eriuweu2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备F</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备G</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备H</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备I</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备J</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备G</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备H</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备I</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            <tr class="success">
+                                <td>设备J</td>
+                                <td>b5dfsyotpk2</td>
+                                <td>
+                                    <button class="btn btn-success btn-xs" title="点击后右侧卫星数据出现该设备位置数据">查看</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="col-md-9 panel-info">
+                    <div class="content-box-header panel-heading">
+                        <div class="panel-title">卫星数据</div>
+
+                        <div class="panel-options">
+                            <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                            <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="content-box-large box-with-header">
+                        <div id="map" style="overflow:auto;width:100%;height:600px">
+{#                            <img src={% static "images/baidu-map-demo.png" %}>#}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    {% include 'footer.html' %}
+</footer>
+
+{% include 'js_includs.html' %}
+</body>
+</html>
